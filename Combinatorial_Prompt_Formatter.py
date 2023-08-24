@@ -4,8 +4,8 @@ def format_string():
     primary_tokens = [entry.get() for entry in primary_entries if entry.get()]
     secondary_tokens = [[entry.get() for entry in entries if entry.get()] for entries in secondary_entries]
     formatted_string = '{' + '|'.join([f'{primary}, {{{"|".join(secondary)}}}' for primary, secondary in zip(primary_tokens, secondary_tokens) if primary and secondary]) + '}'
-    result_entry.delete(0, tk.END)
-    result_entry.insert(0, formatted_string)
+    result_text.delete('1.0', tk.END)
+    result_text.insert(tk.END, formatted_string)
 
 def clear_all():
     for entry in primary_entries:
@@ -13,7 +13,7 @@ def clear_all():
     for entries in secondary_entries:
         for entry in entries:
             entry.delete(0, tk.END)
-    result_entry.delete(0, tk.END)
+    result_text.delete('1.0', tk.END)
 
 def on_focus_in(event):
     format_string()
@@ -23,9 +23,13 @@ def on_tab(event):
     event.widget.tk_focusNext().focus()
     return 'break'
 
+def copy_output():
+    root.clipboard_clear()
+    root.clipboard_append(result_text.get("1.0", tk.END))
+
 root = tk.Tk()
-root.minsize(1775, 210)
-root.maxsize(1775, 210)
+root.minsize(1775, 280)
+root.maxsize(1775, 280)
 root.title("Dynamic Prompt - Combinatorial Formatter        --Additional tokens can be separated with a comma and space. 'token1, token2, token3'")
 
 primary_label = tk.Label(root, text="Primary Tokens")
@@ -70,13 +74,16 @@ button_frame = tk.Frame(root)
 button_frame.grid(row=7,column=0,columnspan=4)
 
 format_button = tk.Button(button_frame, text="Format String", command=format_string)
-format_button.pack(side=tk.LEFT)
+format_button.pack(side=tk.LEFT, padx=5)
 
-clear_button = tk.Button(button_frame, text="Clear All", command=clear_all)
-clear_button.pack(side=tk.LEFT)
+clear_button = tk.Button(button_frame, text="Clear All", command=clear_all, fg='red')
+clear_button.pack(side=tk.LEFT, padx=5)
 
-result_entry = tk.Entry(root)
-result_entry.grid(row=8, column=0, columnspan=4, sticky=tk.EW)
+copy_button = tk.Button(button_frame,text="Copy Output",command=copy_output)
+copy_button.pack(side=tk.LEFT, padx=5)
+
+result_text = tk.Text(root,height=6)
+result_text.grid(row=8, column=0, columnspan=4, sticky=tk.EW)
 
 for i in range(4):
     root.columnconfigure(i, weight=1)
