@@ -28,8 +28,8 @@ def copy_output():
     root.clipboard_append(result_text.get("1.0", tk.END))
 
 root = tk.Tk()
-root.minsize(1775, 280)
-root.maxsize(1775, 280)
+root.minsize(1775, 230)
+root.maxsize(1775, 380)
 root.title("Dynamic Prompt - Combinatorial Formatter        --Additional tokens can be separated with a comma and space. 'token1, token2, token3'")
 
 primary_label = tk.Label(root, text="Primary Tokens")
@@ -82,7 +82,7 @@ clear_button.pack(side=tk.LEFT, padx=5)
 copy_button = tk.Button(button_frame,text="Copy Output",command=copy_output)
 copy_button.pack(side=tk.LEFT, padx=5)
 
-result_text = tk.Text(root,height=6,width=None,wrap=tk.WORD)
+result_text = tk.Text(root,height=12,width=None,wrap=tk.WORD)
 result_text.grid(row=8, column=0, columnspan=4, sticky=tk.EW)
 
 for i in range(4):
