@@ -28,7 +28,7 @@ def copy_output():
     root.clipboard_append(result_text.get("1.0", tk.END))
 
 root = tk.Tk()
-root.minsize(1775, 230)
+root.minsize(1775, 225)
 root.maxsize(1775, 380)
 root.title("Dynamic Prompt - Combinatorial Formatter        --Additional tokens can be separated with a comma and space. 'token1, token2, token3'")
 
