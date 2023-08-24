@@ -82,7 +82,7 @@ clear_button.pack(side=tk.LEFT, padx=5)
 copy_button = tk.Button(button_frame,text="Copy Output",command=copy_output)
 copy_button.pack(side=tk.LEFT, padx=5)
 
-result_text = tk.Text(root,height=6)
+result_text = tk.Text(root,height=6,width=None,wrap=tk.WORD)
 result_text.grid(row=8, column=0, columnspan=4, sticky=tk.EW)
 
 for i in range(4):
