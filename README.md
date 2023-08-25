@@ -12,6 +12,8 @@ Or clone/download the latest commit and change the file extension from .py to .p
 
 Add your "primary tokens" to the fields on the left. Add your "secondary tokens" to the fields on the right.
 
+ALT + Arrow keys quickly shifts between columns/rows.
+
 You can seperate additional tokens with a comma and space in any field like so: token1, token2, token3
 
 Check out [the official syntax documentation](https://github.com/adieyal/sd-dynamic-prompts/blob/main/docs/SYNTAX.md) for the Dynamic Prompts extension, there's way more info and ideas for you there.
