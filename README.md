@@ -1,5 +1,5 @@
 # Combinatorial_Prompt_Formatter
-Formats individual (or grouped) tokens for use with the popular Dynamic Prompts extension
+Formats individual (or grouped) tokens for use with the popular [Dynamic Prompts extension](https://github.com/adieyal/sd-dynamic-prompts)
 
 ![Combinatorial_Prompt_Formatter](https://github.com/Nenotriple/Combinatorial_Prompt_Formatter/assets/70049990/bd80e93e-adb1-4d2d-b1ff-fb6e74f2daeb)
 
