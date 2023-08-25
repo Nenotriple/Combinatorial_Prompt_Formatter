@@ -1,7 +1,7 @@
 # Combinatorial_Prompt_Formatter
 Formats individual (or grouped) tokens for use with the popular [Dynamic Prompts extension](https://github.com/adieyal/sd-dynamic-prompts)
 
-![Combinatorial_Prompt_Formatter](https://github.com/Nenotriple/Combinatorial_Prompt_Formatter/assets/70049990/bd80e93e-adb1-4d2d-b1ff-fb6e74f2daeb)
+![Combinatorial_Prompt_Formatter](https://github.com/Nenotriple/Combinatorial_Prompt_Formatter/assets/70049990/ec60f200-fb45-4ea4-bc18-f32f3cae5c7a)
 
 # Running this code
 Simply download the latest release and double click the .pyw file to launch the script.
