@@ -28,10 +28,37 @@ def copy_output():
     result = result_text.get("1.0", tk.END)
     root.clipboard_append(result.rstrip('\n'))
 
+def on_alt_arrow(event):
+    if event.keysym == 'Left':
+        event.widget.tk_focusPrev().focus()
+    elif event.keysym == 'Right':
+        event.widget.tk_focusNext().focus()
+    elif event.keysym == 'Up':
+        index = primary_entries.index(event.widget) if event.widget in primary_entries else None
+        if index is not None and index > 0:
+            primary_entries[index-1].focus()
+        else:
+            index = [i for i, entries in enumerate(secondary_entries) if event.widget in entries]
+            if index:
+                row, col = index[0], secondary_entries[index[0]].index(event.widget)
+                if row > 0:
+                    secondary_entries[row-1][col].focus()
+    elif event.keysym == 'Down':
+        index = primary_entries.index(event.widget) if event.widget in primary_entries else None
+        if index is not None and index < len(primary_entries)-1:
+            primary_entries[index+1].focus()
+        else:
+            index = [i for i, entries in enumerate(secondary_entries) if event.widget in entries]
+            if index:
+                row, col = index[0], secondary_entries[index[0]].index(event.widget)
+                if row < len(secondary_entries)-1:
+                    secondary_entries[row+1][col].focus()
+    return 'break'
+
 root = tk.Tk()
 root.minsize(1775, 225)
 root.maxsize(1775, 380)
-root.title("Dynamic Prompt - Combinatorial Formatter        --Additional tokens can be separated with a comma and space. 'token1, token2, token3'")
+root.title("Dynamic Prompt - Combinatorial Formatter        --Alt+arrow keys quickly shift between columns/rows--  --Add multiple tokens to any field seperated by a comma and space--")
 
 primary_label = tk.Label(root, text="Primary Tokens")
 primary_label.grid(row=0, column=0, columnspan=2)
@@ -53,6 +80,10 @@ for i in range(6):
     primary_entry.configure(bg=pastel_colors[i])
     primary_entry.bind("<FocusIn>", on_focus_in)
     primary_entry.bind("<Tab>", on_tab)
+    primary_entry.bind("<Alt-Left>", on_alt_arrow)
+    primary_entry.bind("<Alt-Right>", on_alt_arrow)
+    primary_entry.bind("<Alt-Up>", on_alt_arrow)
+    primary_entry.bind("<Alt-Down>", on_alt_arrow)
     primary_entries.append(primary_entry)
 
     separator_label = tk.Label(root, text="  ")
@@ -68,6 +99,10 @@ for i in range(6):
         secondary_entry.configure(bg=pastel_colors[i])
         secondary_entry.bind("<FocusIn>", on_focus_in)
         secondary_entry.bind("<Tab>", on_tab)
+        secondary_entry.bind("<Alt-Left>", on_alt_arrow)
+        secondary_entry.bind("<Alt-Right>", on_alt_arrow)
+        secondary_entry.bind("<Alt-Up>", on_alt_arrow)
+        secondary_entry.bind("<Alt-Down>", on_alt_arrow)
         secondary_entries_row.append(secondary_entry)
     secondary_entries.append(secondary_entries_row)
 
