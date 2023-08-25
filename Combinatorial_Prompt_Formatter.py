@@ -25,7 +25,8 @@ def on_tab(event):
 
 def copy_output():
     root.clipboard_clear()
-    root.clipboard_append(result_text.get("1.0", tk.END))
+    result = result_text.get("1.0", tk.END)
+    root.clipboard_append(result.rstrip('\n'))
 
 root = tk.Tk()
 root.minsize(1775, 225)
