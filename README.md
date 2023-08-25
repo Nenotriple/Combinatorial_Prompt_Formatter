@@ -14,6 +14,8 @@ Add your "primary tokens" to the fields on the left. Add your "secondary tokens"
 
 You can seperate additional tokens with a comma and space in any field like so: token1, token2, token3
 
+Check out [the official syntax documentation](https://github.com/adieyal/sd-dynamic-prompts/blob/main/docs/SYNTAX.md) for the Dynamic Prompts extension. for way more info and ideas.
+
 # Requirements
 Python 3.10.6 or greater
 
