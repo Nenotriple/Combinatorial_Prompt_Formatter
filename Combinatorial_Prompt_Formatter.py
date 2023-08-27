@@ -12,7 +12,6 @@ def format_string():
 
 def secondary_tokens_str(tokens):
     return '|'.join([token for token in tokens if token])
-
 secondary_only_mode = False
 
 def toggle_mode():
@@ -72,10 +71,15 @@ def on_alt_arrow(event):
                     secondary_entries[row+1][col].focus()
     return 'break'
 
+def on_middle_click(event):
+    if event.num == 2:  # Middle mouse button click
+        event.widget.delete(0, tk.END)
+        return "break"
+
 root = tk.Tk()
 root.minsize(1775, 225)
 root.maxsize(1775, 380)
-root.title("Dynamic Prompt - Combinatorial Formatter        --Alt+arrow keys quickly shift between columns/rows--  --Add multiple tokens to any field seperated by a comma and space--")
+root.title("v1.03 - Dynamic Prompts: Combinatorial/Nested Formatter")
 
 primary_label = tk.Label(root, text="Primary Tokens")
 primary_label.grid(row=0, column=0, columnspan=2)
@@ -102,6 +106,11 @@ for i in range(6):
     primary_entry.bind("<Alt-Up>", on_alt_arrow)
     primary_entry.bind("<Alt-Down>", on_alt_arrow)
     primary_entries.append(primary_entry)
+    for primary_entry in primary_entries:
+        primary_entry.bind("<Button-2>", on_middle_click)
+    for secondary_entry_row in secondary_entries:
+        for secondary_entry in secondary_entry_row:
+            secondary_entry.bind("<Button-2>", on_middle_click) 
 
     separator_label = tk.Label(root, text="  ")
     separator_label.grid(row=i+1, column=2)
@@ -138,8 +147,17 @@ copy_button.pack(side=tk.LEFT, padx=5)
 toggle_button = tk.Button(button_frame, text="Current mode: Primary + Secondary", command=toggle_mode)
 toggle_button.pack(side=tk.LEFT, padx=5)
 
-result_text = tk.Text(root,height=12,width=None,wrap=tk.WORD)
+result_text = tk.Text(root, height=12, width=None, wrap=tk.WORD)
 result_text.grid(row=8, column=0, columnspan=4, sticky=tk.EW)
+greeting_message = "Tips and Features\n\n" \
+                   "Use ALT + Arrow Keys to quickly navigate between columns and rows.\n" \
+                   "Middle Click in any row/column to quickly delete the text.\n" \
+                   "Add multiple keywords/tokens to any field just like you would in a prompt.\n\n" \
+                   "Switch between and Primary + Secondary or Secondary only modes to control prompt formatting.\n\n" \
+                   "Primary + Seconday will make a prompt that picks 1 primary, and 1 secondary. EXAMPLE: {Primary1, {thing1|thing2|thing3}}\n\n" \
+                   "Secondary only will make a prompt that picks only 1 secondary. EXAMPLE: {thing1|thing2|thing3}" \
+
+result_text.insert(tk.END, greeting_message)
 
 for i in range(4):
     root.columnconfigure(i, weight=1)
