@@ -14,7 +14,31 @@ Add your "primary tokens" to the fields on the left. Add your "secondary tokens"
 
 ALT + Arrow keys quickly shifts between columns/rows.
 
+Middle Click to quickly delete text in any column/row.
+
 You can seperate additional tokens with a comma and space in any field like so: token1, token2, token3
+
+**Primary+Secondary mode:** {primary1, {thing1|thing2|thing3}}
+
+Picks a primary token, and a secondary token.
+
+Primary 1, thing1
+
+Primary 1, thing2
+
+Primary 1, thing3
+
+**Secondary only mode:** {thing1|thing2|thing3}
+
+Only picks a secondary token.
+
+thing1
+
+thing2
+
+thing3
+
+__________________________________________________
 
 Check out [the official syntax documentation](https://github.com/adieyal/sd-dynamic-prompts/blob/main/docs/SYNTAX.md) for the Dynamic Prompts extension, there's way more info and ideas for you there.
 
