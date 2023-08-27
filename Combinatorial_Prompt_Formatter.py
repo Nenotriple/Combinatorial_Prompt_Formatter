@@ -3,9 +3,26 @@ import tkinter as tk
 def format_string():
     primary_tokens = [entry.get() for entry in primary_entries if entry.get()]
     secondary_tokens = [[entry.get() for entry in entries if entry.get()] for entries in secondary_entries]
-    formatted_string = '{' + '|'.join([f'{primary}, {{{"|".join(secondary)}}}' for primary, secondary in zip(primary_tokens, secondary_tokens) if primary and secondary]) + '}'
+    if secondary_only_mode:
+        formatted_string = '{' + '|'.join([f'{secondary_tokens_str(entry)}' for entry in secondary_tokens if entry]) + '}'
+    else:
+        formatted_string = '{' + '|'.join([f'{primary}, {{{"|".join(secondary)}}}' for primary, secondary in zip(primary_tokens, secondary_tokens) if primary and secondary]) + '}'
     result_text.delete('1.0', tk.END)
     result_text.insert(tk.END, formatted_string)
+
+def secondary_tokens_str(tokens):
+    return '|'.join([token for token in tokens if token])
+
+secondary_only_mode = False
+
+def toggle_mode():
+    global secondary_only_mode
+    secondary_only_mode = not secondary_only_mode
+    if secondary_only_mode:
+        toggle_button.config(text="Current mode: Secondary Only")
+    else:
+        toggle_button.config(text="Current mode: Primary + Secondary")
+    format_string()
 
 def clear_all():
     for entry in primary_entries:
@@ -117,6 +134,9 @@ clear_button.pack(side=tk.LEFT, padx=5)
 
 copy_button = tk.Button(button_frame,text="Copy Output",command=copy_output)
 copy_button.pack(side=tk.LEFT, padx=5)
+
+toggle_button = tk.Button(button_frame, text="Current mode: Primary + Secondary", command=toggle_mode)
+toggle_button.pack(side=tk.LEFT, padx=5)
 
 result_text = tk.Text(root,height=12,width=None,wrap=tk.WORD)
 result_text.grid(row=8, column=0, columnspan=4, sticky=tk.EW)
