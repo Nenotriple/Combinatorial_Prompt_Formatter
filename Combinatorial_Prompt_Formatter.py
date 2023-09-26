@@ -72,14 +72,22 @@ def on_alt_arrow(event):
     return 'break'
 
 def on_middle_click(event):
-    if event.num == 2:  # Middle mouse button click
+    if event.num == 2:
         event.widget.delete(0, tk.END)
         return "break"
 
+def adjust_entry_width(event):
+    entry_width = root.winfo_width() // 40
+    for secondary_entries_row in secondary_entries:
+        for secondary_entry in secondary_entries_row:
+            secondary_entry.configure(width=entry_width)
+    
 root = tk.Tk()
-root.minsize(1775, 225)
-root.maxsize(1775, 380)
-root.title("v1.03 - Dynamic Prompts: Combinatorial/Nested Formatter")
+root.minsize(800, 380)
+root.maxsize(3200, 380)
+root.geometry('1775x380')
+root.title("v1.04 - Dynamic Prompts: Combinatorial/Nested Formatter")
+root.bind('<Configure>', adjust_entry_width)
 
 primary_label = tk.Label(root, text="Primary Tokens")
 primary_label.grid(row=0, column=0, columnspan=2)
@@ -97,7 +105,7 @@ pastel_colors = ["#FFF2E6", "#F2F8E6", "#E6F2F8", "#F8E6F2", "#E6E6F8", "#F8E6E6
 
 for i in range(6):
     primary_entry = tk.Entry(root, width=50)
-    primary_entry.grid(row=i+1, column=0, columnspan=2)
+    primary_entry.grid(row=i+1, column=0, columnspan=2, padx=3)
     primary_entry.configure(bg=pastel_colors[i])
     primary_entry.bind("<FocusIn>", on_focus_in)
     primary_entry.bind("<Tab>", on_tab)
@@ -112,15 +120,13 @@ for i in range(6):
         for secondary_entry in secondary_entry_row:
             secondary_entry.bind("<Button-2>", on_middle_click) 
 
-    separator_label = tk.Label(root, text="  ")
-    separator_label.grid(row=i+1, column=2)
-
-    secondary_entry_frame = tk.Frame(root, width=75)
-    secondary_entry_frame.grid(row=i+1, column=3, columnspan=2)
+    secondary_entry_frame = tk.Frame(root)
+    secondary_entry_frame.grid(row=i+1, column=3, columnspan=2, sticky='ew', padx=3)
     root.columnconfigure(3, weight=1)
     secondary_entries_row = []
     for j in range(6):
-        secondary_entry = tk.Entry(secondary_entry_frame, width=40)
+        entry_width = root.winfo_width() // 40
+        secondary_entry = tk.Entry(secondary_entry_frame, width=entry_width)
         secondary_entry.pack(side=tk.LEFT)
         secondary_entry.configure(bg=pastel_colors[i])
         secondary_entry.bind("<FocusIn>", on_focus_in)
@@ -159,7 +165,7 @@ greeting_message = "Tips and Features\n\n" \
 
 result_text.insert(tk.END, greeting_message)
 
-for i in range(4):
-    root.columnconfigure(i, weight=1)
-
+for i in range(8):
+    root.grid_rowconfigure(i, weight=1)
+    
 root.mainloop()
